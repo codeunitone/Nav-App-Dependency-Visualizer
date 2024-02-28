@@ -11,6 +11,12 @@ This little script reads all `app.json` files within a folder (including subfold
 New-DependencyVisalization.ps1 -Path "<path\to\app.json>"
 ```
 
+You can run following script to show the help information of the script.
+
+```PowerShell
+Get-Help .\New-DependencyVisalization.ps1
+```
+
 ## Rendering the Mermaid Graph
 
 There are [many tools](https://mermaid.js.org/intro/getting-started.html#ways-to-use-mermaid) out there to render a mermaid graph.
