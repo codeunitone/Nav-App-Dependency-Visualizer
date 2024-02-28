@@ -18,9 +18,6 @@ switch ($Orientation) {
     "LeftRight" { $OrientationMapped = "LR" }
 }
 
-$MarkdownContent = "``````mermaid`n"
-$MarkdownContent += "graph $OrientationMapped`n"
-
 Get-ChildItem -Path $Path -Recurse -Filter 'app.json' | ForEach-Object {
     $appJson = Get-Content -Path $_.FullName -Raw | ConvertFrom-Json
     $MermaidGraph += "  $(($appJson.name).replace(' ','_'))`n"
@@ -30,11 +27,10 @@ Get-ChildItem -Path $Path -Recurse -Filter 'app.json' | ForEach-Object {
 }
 
 if ($MermaidGraph) {
-    $MarkdownContent += "$MermaidGraph`n"
-    $MarkdownContent += "``````"
+    $MermaidGraph = "graph $OrientationMapped`n$MermaidGraph"
 
-    $OutputFile = Join-Path -Path $OutputPath -ChildPath "DependencyVisualization.md"
-    $MarkdownContent | Out-File -FilePath "$OutputFile"
+    $OutputFile = Join-Path -Path $OutputPath -ChildPath "DependencyVisualization.mmd"
+    $MermaidGraph | Out-File -FilePath "$OutputFile"
     Write-Host "Graph created at $OutputFile"
 }
 else {
